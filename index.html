@@ -4,30 +4,44 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Типография</title>
-
-  <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icon-192.png">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Типография">
   <meta name="theme-color" content="#000000">
-
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
-    iframe {
-      position: fixed; inset: 0;
-      width: 100%; height: 100%;
-      border: none;
+    html, body {
+      width: 100%; min-height: 100%;
+      background: #000; color: #fff;
+      font-family: -apple-system, "Segoe UI", Inter, sans-serif;
     }
+    .wrap {
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 14px; padding: 24px;
+    }
+    .logo { width: 96px; height: 96px; margin-bottom: 10px; }
+    .hint { font-size: 13px; color: #8a8a86; margin-bottom: 6px; text-align: center; }
+    a.btn {
+      display: block; width: 100%; max-width: 320px;
+      padding: 16px 20px; border: 1px solid #2e2e2c; border-radius: 12px;
+      color: #fff; text-decoration: none; font-size: 17px; text-align: center;
+      background: #121211;
+    }
+    a.btn:active { background: #1e1e1c; }
   </style>
 </head>
 <body>
-  <iframe id="app" allow="fullscreen"></iframe>
+  <div class="wrap">
+    <img class="logo" src="icon-192.png" alt="">
+    <div class="hint">Выберите приложение и установите его —<br>каждое ставится отдельно, со своим офисом.</div>
+    <a class="btn" href="./ng/">Новогиреево</a>
+    <a class="btn" href="./nk/">Новокосино</a>
+    <a class="btn" href="./admin/">Руководители</a>
+  </div>
   <script>
-    var BASE = 'https://script.google.com/macros/s/AKfycbyg3Hkp5Srt-kQCNrqAjWIkpmSl0Ep1yqm3fsG3ikSoAodGkrbRq8Nd0LBZKe6mMOCI/exec';
-    var app = new URLSearchParams(location.search).get('app') || 'ng';
-    document.getElementById('app').src = BASE + '?app=' + encodeURIComponent(app);
+    // Совместимость со старыми ссылками ?app=ng|nk|admin — уводим на страницу офиса.
+    var app = new URLSearchParams(location.search).get('app');
+    if (app === 'ng' || app === 'nk' || app === 'admin') {
+      location.replace('./' + app + '/');
+    }
   </script>
 </body>
 </html>
