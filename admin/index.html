@@ -12,23 +12,37 @@
   <meta name="apple-mobile-web-app-title" content="Руководители">
   <meta name="theme-color" content="#000000">
 
+  <!-- Переход БЕЗ JS — на случай, если скрипты отключены. -->
+  <meta http-equiv="refresh" content="0; url=https://script.google.com/macros/s/AKfycbyg3Hkp5Srt-kQCNrqAjWIkpmSl0Ep1yqm3fsG3ikSoAodGkrbRq8Nd0LBZKe6mMOCI/exec?app=admin">
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
-    iframe {
-      position: fixed; inset: 0;
-      width: 100%; height: 100%;
-      border: none;
-    }
+    html, body { width: 100%; height: 100%; background: #fafaf8; }
+    body { display: flex; align-items: center; justify-content: center;
+           font-family: Inter, -apple-system, system-ui, sans-serif; color: #1a1a18; }
+    .box { text-align: center; padding: 24px; }
+    .t   { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+    .s   { font-size: 13px; color: #9a9a94; margin-bottom: 20px; }
+    a.go { display: inline-block; padding: 12px 22px; border-radius: 10px;
+           background: #3d8b5f; color: #fff; text-decoration: none; font-size: 15px; }
   </style>
 </head>
 <body>
-  <iframe id="app" allow="fullscreen"></iframe>
+  <div class="box">
+    <div class="t">Руководители</div>
+    <div class="s">Открываю приложение…</div>
+    <a class="go" id="go" href="#">Открыть вручную</a>
+  </div>
+
   <script>
-    // Офис зашит в страницу: у каждого свой start_url, установленное
-    // приложение всегда открывает свой офис (см. ../README.md).
+    // 09.09.2026: iframe УБРАН — см. ../README.md (Chrome режет сторонние куки во фрейме).
+    // ⚠️ Приложения руководителей НЕ существует: серверная ветка ?app=admin зовёт шаблон
+    // app-admin, которого в проекте нет, и Apps Script отдаёт свою страницу ошибки.
+    // Эта папка оставлена только чтобы старая иконка не вела в никуда.
     var BASE = 'https://script.google.com/macros/s/AKfycbyg3Hkp5Srt-kQCNrqAjWIkpmSl0Ep1yqm3fsG3ikSoAodGkrbRq8Nd0LBZKe6mMOCI/exec';
-    document.getElementById('app').src = BASE + '?app=admin';
+    var URL_ = BASE + '?app=admin';
+    document.getElementById('go').href = URL_;
+    location.replace(URL_);
   </script>
 </body>
 </html>
