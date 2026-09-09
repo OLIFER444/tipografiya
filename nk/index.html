@@ -12,23 +12,39 @@
   <meta name="apple-mobile-web-app-title" content="Новокосино">
   <meta name="theme-color" content="#000000">
 
+  <!-- Переход БЕЗ JS — на случай, если скрипты отключены. -->
+  <meta http-equiv="refresh" content="0; url=https://script.google.com/macros/s/AKfycbyg3Hkp5Srt-kQCNrqAjWIkpmSl0Ep1yqm3fsG3ikSoAodGkrbRq8Nd0LBZKe6mMOCI/exec?app=nk">
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
-    iframe {
-      position: fixed; inset: 0;
-      width: 100%; height: 100%;
-      border: none;
-    }
+    html, body { width: 100%; height: 100%; background: #fafaf8; }
+    body { display: flex; align-items: center; justify-content: center;
+           font-family: Inter, -apple-system, system-ui, sans-serif; color: #1a1a18; }
+    .box { text-align: center; padding: 24px; }
+    .t   { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+    .s   { font-size: 13px; color: #9a9a94; margin-bottom: 20px; }
+    a.go { display: inline-block; padding: 12px 22px; border-radius: 10px;
+           background: #3d8b5f; color: #fff; text-decoration: none; font-size: 15px; }
   </style>
 </head>
 <body>
-  <iframe id="app" allow="fullscreen"></iframe>
+  <div class="box">
+    <div class="t">Новокосино</div>
+    <div class="s">Открываю приложение…</div>
+    <a class="go" id="go" href="#">Открыть вручную</a>
+  </div>
+
   <script>
-    // Офис зашит в страницу: у каждого свой start_url, установленное
-    // приложение всегда открывает свой офис (см. ../README.md).
+    // 09.09.2026: iframe УБРАН. Chrome перестал пускать Apps Script в фрейм на чужом
+    // домене (сторонние куки и localStorage режутся как «третья сторона»), и обёртка
+    // показывала «страница недоступна или перемещена», хотя прямая ссылка работала.
+    // Переход вместо встраивания: цена — вернулся баннер Apps Script, зато работает
+    // в любом браузере. Иконка и имя PWA сохраняются — манифест остаётся здесь.
     var BASE = 'https://script.google.com/macros/s/AKfycbyg3Hkp5Srt-kQCNrqAjWIkpmSl0Ep1yqm3fsG3ikSoAodGkrbRq8Nd0LBZKe6mMOCI/exec';
-    document.getElementById('app').src = BASE + '?app=nk';
+    var URL_ = BASE + '?app=nk';
+    document.getElementById('go').href = URL_;
+    // replace, а не href: страница-перевалка не остаётся в истории, «назад» не зацикливается.
+    location.replace(URL_);
   </script>
 </body>
 </html>
